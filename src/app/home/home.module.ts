@@ -5,7 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
-
+import { BLE } from '@awesome-cordova-plugins/ble/ngx';
+import { NetworkInterface } from '@awesome-cordova-plugins/network-interface/ngx';
+import { WebSocketServer } from '@awesome-cordova-plugins/web-socket-server/ngx';
 
 @NgModule({
   imports: [
@@ -14,6 +16,7 @@ import { HomePageRoutingModule } from './home-routing.module';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  providers: [BLE, NetworkInterface, WebSocketServer]
 })
 export class HomePageModule {}
