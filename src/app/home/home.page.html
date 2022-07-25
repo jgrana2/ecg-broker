@@ -83,6 +83,17 @@
           </ng-template>
         </ion-modal>
       </ion-row>
+      <ion-row>
+        <strong>ECG Recording</strong>
+      </ion-row>
+      <ion-row>
+        <ion-button (click)='record_ecg()'>RECORD ECG</ion-button>
+      </ion-row>
+      <ion-row>
+        <ion-text [hidden]=this.is_hidden color="{{this.is_recording ? 'danger' : 'medium'}}">
+          {{this.is_recording ? 'Recording': 'Stopped'}}
+        </ion-text>
+      </ion-row>
     </ion-grid>
   </div>
 </ion-content>

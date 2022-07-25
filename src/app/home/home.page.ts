@@ -204,6 +204,25 @@ export class HomePage {
       });
   }
 
+  record_ecg(){
+    if (this.is_recording) {
+      this.is_recording = false;
+      console.log("Stopped recording ECG");
+      clearInterval(this.blink_timer);
+      this.is_hidden = false;
+    } else {
+      this.is_recording = true;
+      console.log("Recording ECG...");
+      this.blink_timer = setInterval(()=>{
+        if(this.is_hidden) {
+          this.is_hidden = false;
+        }else{
+          this.is_hidden = true;
+        }
+      }, 500)
+    }
+  }
+
   start_notifications() {
     this.ble.startNotification(this.device.id, '805B', '8171').subscribe(result => {
       let data = new Uint8Array(result[0]);
