@@ -55,6 +55,34 @@
         <ion-button (click)='connect_to_socket_server()'>
           {{this.socket_client_connected ? 'DISCONNECT': 'CONNECT'}}</ion-button>
       </ion-row>
+      <ion-row>
+        <strong>Datos del Paciente</strong>
+      </ion-row>
+      <ion-row>
+        <ion-button expand="block" (click)="set_open_modal(true)">PACIENTE</ion-button>
+        <ion-modal [isOpen]="isModalOpen">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>Datos del Paciente</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button (click)="set_open_modal(false)">Cerrar</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <ion-item>
+                <ion-label position="stacked">Nombre</ion-label>
+                <ion-input type="text" placeholder="Nombre" [value]="this.patient_firstname" (input)="set_patient_firstname($event.target.value)"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Apellido</ion-label>
+                <ion-input type="text" placeholder="Apellido" [value]="this.patient_lastname" (input)="set_patient_lastname($event.target.value)"></ion-input>
+              </ion-item>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </ion-row>
     </ion-grid>
   </div>
 </ion-content>

@@ -53,6 +53,20 @@ export class HomePage {
     }
   }
 
+  set_open_modal(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+    if(this.patient_firstname && !isOpen) console.log("Patient first name: " + this.patient_firstname);
+    if(this.patient_lastname && !isOpen) console.log("Patient last name: " + this.patient_lastname);
+  }
+
+  set_patient_firstname(name){
+    this.patient_firstname = name;
+  }
+
+  set_patient_lastname(name){
+    this.patient_lastname = name;
+  }
+
   start_ws_server() {
     // this.stop_ws_server();
     console.log("Starting server...");
