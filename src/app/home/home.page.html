@@ -13,7 +13,7 @@
         </ion-text>
       </ion-row>
       <ion-row>
-        <ion-button (click)='button_handler()'>{{this.is_connected ? 'DISCONNECT': 'CONNECT'}}</ion-button>
+        <ion-button (click)='connect_to_holter()'>{{this.is_connected ? 'DISCONNECT': 'CONNECT'}}</ion-button>
       </ion-row>
       <ion-row>
         <strong>WebSocket Server</strong>
@@ -24,7 +24,7 @@
         </ion-text>
       </ion-row>
       <ion-row>
-        <ion-button (click)='server_handler()'>
+        <ion-button (click)='connect_to_ws_server()'>
           {{this.ws_is_connected ? 'STOP': 'START'}}</ion-button>
       </ion-row>
       <ion-row>

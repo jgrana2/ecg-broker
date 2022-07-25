@@ -5,6 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { NetworkInterface } from '@awesome-cordova-plugins/network-interface/ngx';
 // import { WebSocketServer } from '@awesome-cordova-plugins/web-socket-server/ngx';
 import { io } from "socket.io-client";
+import { element } from 'protractor';
 
 declare var cordova: any
 var clients = [];
@@ -24,14 +25,23 @@ export class HomePage {
   ip_address: string;
   socket_client: any;
   socket_client_connected: boolean;
+  isModalOpen: boolean = false;
+  patient_firstname: string;
+  patient_lastname: string;
+  is_recording: boolean = false;
+  is_hidden = false;
+  blink_timer: any;
   constructor(private ble: BLE,
     public loading_controller: LoadingController,
     public toastController: ToastController,
     private chRef: ChangeDetectorRef,
     private networkInterface: NetworkInterface,
   ) {
-
-    this.wsserver = cordova.plugins.wsserver;
+    try {
+      this.wsserver = cordova.plugins.wsserver;
+    } catch (e) {
+      console.log(e);
+    }
     this.is_connected = false;
     this.ws_is_connected = false;
     this.is_scanning = false;
@@ -45,7 +55,7 @@ export class HomePage {
       .catch(error => console.error(`Unable to get IP: ${error}`));
   }
 
-  server_handler() {
+  connect_to_ws_server() {
     if (this.ws_is_connected) {
       this.stop_ws_server();
     } else {
@@ -106,7 +116,7 @@ export class HomePage {
     });
   }
 
-  button_handler() {
+  connect_to_holter() {
     if (this.is_connected) {
       this.ble.disconnect(this.device.id).then(result => {
         this.is_connected = false;
@@ -136,7 +146,7 @@ export class HomePage {
         console.log("Disconnected from socket server");
         this.socket_client_connected = false;
       });
-    }else{
+    } else {
       this.socket_client.emit("force_disconnect");
       this.socket_client_connected = false;
     }
@@ -144,6 +154,10 @@ export class HomePage {
   }
 
   async start_scanning() {
+    this.ble.enable().then(() => {
+      console.log('BLE Enabled');
+    })
+
     let devices = [];
     let loader = await this.loading_controller.create({
       message: "Scanning...",
